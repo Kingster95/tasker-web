@@ -1,0 +1,39 @@
+#topBar{
+    width: 100%;
+    height: 10%;
+  
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+  #topRight{
+    width: 85%;
+    height: 50%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 2.5%;
+  }
+  #topRight input{
+    background-color: var(--input-background);
+    border: 0;
+    width: 25%;
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.3s ease-in-out, margin-right 0.3s ease-in-out;
+    padding: 20px;
+  }
+  #topRight input:focus{
+    margin-right: 35%;
+    width: 35%;
+  }
+  #topRight input:hover{
+    width: 30%;
+  }
+  #topRight input:focus + label {
+    display: none;
+  }
+  #topRight img{
+    width: 2.5%;
+    height: auto;
+  }

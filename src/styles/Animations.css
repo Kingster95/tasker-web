@@ -1,0 +1,26 @@
+@keyframes rotate-up {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(-90deg);
+    }
+  }
+  
+  @keyframes rotate-down {
+    from {
+      transform: rotate(-90deg);
+    }
+    to {
+      transform: rotate(0deg);
+    }
+  }
+  
+  .rotate-up {
+    animation: rotate-up 0.15s linear forwards;
+  }
+  
+  .rotate-down {
+    animation: rotate-down 0.15s linear forwards;
+  }
+
