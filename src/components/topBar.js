@@ -1,5 +1,5 @@
 import "../styles/App.css";
-import "../styles/TopBar.css"
+import "../styles/TopBar.css";
 function TopBar() {
   return (
     <div id="topBar">
