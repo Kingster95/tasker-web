@@ -145,7 +145,7 @@
 }
 
 .labelItem p {
-  font-size: 16px;
+  font-size: 0.85vw;
 }
 
 .optionItem {
@@ -163,7 +163,7 @@
 }
 
 .optionItem p {
-  font-size: 16px;
+  font-size: 0.85vw;
 }
 
 .optionItem p:hover {

@@ -23,13 +23,14 @@
     transition: width 0.3s ease-in-out, margin-right 0.3s ease-in-out;
     padding: 20px;
   }
+  #topRight input:hover:not(:focus){
+    width: 30%;
+  }
   #topRight input:focus{
     margin-right: 35%;
     width: 35%;
   }
-  #topRight input:hover{
-    width: 30%;
-  }
+  
   #topRight input:focus + label {
     display: none;
   }

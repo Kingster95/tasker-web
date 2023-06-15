@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { progress } from "../../hooks/database";
 
 function ProgressCards() {
-  const [progressHeight, setProgressHeight] = useState("0%");
+  const [progressHeight, setProgressHeight] = useState("90%");
   const [progressPressed, setProgressPressed] = useState(true);
-  const [progressOpacity, setProgressOpacity] = useState(1);
+  const [progressOpacity, setProgressOpacity] = useState(0);
 
   let cardsColors = ["#d84721", "#fd9d28", "#78d734", "#78d734"];
 
@@ -19,7 +19,8 @@ function ProgressCards() {
   };
 
   useEffect(() => {
-    calculateHeight();
+    setTimeout(() => calculateHeight(),150);
+    setTimeout(() => setProgressOpacity(1), 150);
   }, []);
 
   function triggerProgress() {
@@ -74,7 +75,7 @@ function ProgressCards() {
                 alignSelf: "center",
                 objectFit: "cover",
                 marginTop: "2%",
-                marginBottom: "5%",
+                marginBottom: "3%",
                 borderRadius: "16px",
               }}
               src={require("../../assets/background_1.jpg")}

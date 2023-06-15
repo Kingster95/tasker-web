@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { review } from "../../hooks/database";
 
 function ReviewCards() {
-  const [reviewHeight, setReviewHeight] = useState("0%");
+  const [reviewHeight, setReviewHeight] = useState("90%");
   const [reviewPressed, setReviewPressed] = useState(true);
-  const [reviewOpacity, setReviewOpacity] = useState(1);
+  const [reviewOpacity, setReviewOpacity] = useState(0);
 
   let cardsColors = ["#d84721", "#fd9d28", "#78d734", "#78d734"];
 
@@ -16,10 +16,12 @@ function ReviewCards() {
       } else x = x + 13;
     setReviewHeight(x.toString() + "%");
     console.log(x);
+    
   };
 
   useEffect(() => {
-    calculateHeight();
+    setTimeout(() => calculateHeight(),150);
+    setTimeout(() => setReviewOpacity(1), 150);
   }, []);
 
   function triggerReview() {
@@ -74,7 +76,7 @@ function ReviewCards() {
                 alignSelf: "center",
                 objectFit: "cover",
                 marginTop: "2%",
-                marginBottom: "5%",
+                marginBottom: "3%",
                 borderRadius: "16px",
               }}
               src={require("../../assets/background_1.jpg")}

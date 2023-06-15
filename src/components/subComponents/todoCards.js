@@ -2,10 +2,10 @@
 import { useState, useEffect } from "react";
 import { todo } from "../../hooks/database";
 function ToDoCards() {
-  const [todoHeight, setToDoHeight] = useState("0%");
+  const [todoHeight, setToDoHeight] = useState("90%");
   const [todoPressed, setTodoPressed] = useState(true);
-  const [todoOpacity, setTodoOpacity] = useState(1);
-
+  const [todoOpacity, setTodoOpacity] = useState(0);
+  
   let cardsColors = ["#d84721", "#fd9d28", "#78d734", "#78d734"];
 
   const calculateHeight = () => {
@@ -19,7 +19,8 @@ function ToDoCards() {
   };
 
   useEffect(() => {
-    calculateHeight();
+    setTimeout(() => calculateHeight(),150);
+    setTimeout(() => setTodoOpacity(1), 150);
   }, []);
 
   function triggerToDo() {
@@ -74,7 +75,7 @@ function ToDoCards() {
                 alignSelf: "center",
                 objectFit: "cover",
                 marginTop: "2%",
-                marginBottom: "5%",
+                marginBottom: "3%",
                 borderRadius: "16px",
               }}
               src={require("../../assets/background_1.jpg")}
