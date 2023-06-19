@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 function TopBar() {
   const [message, setMessage] = useState("Loading....");
 
-  useEffect(() => {
-    fetch("/api")
-      .then((response) => response.json())
-      .then((data) => {
-        setMessage(data);
-      });
-  }, []);
+useEffect(() => {
+  fetch("https://tasker-server.vercel.app/about")
+    .then((response) => response.json())
+    .then((data) => {
+      setMessage(data.message); // Access the 'message' property from the JSON response
+    });
+}, []);
   return (
     <div id="topBar">
       <h3>{message}</h3>
