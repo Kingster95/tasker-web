@@ -1,9 +1,19 @@
 import "../styles/App.css";
 import "../styles/TopBar.css";
+import { useEffect, useState } from "react";
 function TopBar() {
+
+  const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:8000/message")
+      .then((res) => res.json())
+      .then((data) => setMessage(data.message));
+  }, []);
+
   return (
     <div id="topBar">
-      <h3>Team Tasks</h3>
+      <h3>{message}</h3>
       <div id="topRight">
         <input
           type="search"
