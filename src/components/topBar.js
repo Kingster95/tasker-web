@@ -2,15 +2,15 @@ import "../styles/App.css";
 import "../styles/TopBar.css";
 import { useEffect, useState } from "react";
 function TopBar() {
-
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Loading....");
 
   useEffect(() => {
-    fetch("http://localhost:8000/message")
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message));
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setMessage(data);
+      });
   }, []);
-
   return (
     <div id="topBar">
       <h3>{message}</h3>
@@ -19,7 +19,7 @@ function TopBar() {
           type="search"
           placeholder="Search here"
           onChange={null}
-          value={null}
+          value={""}
         />
         <img
           src={require("../assets/notification_icon.png")}
