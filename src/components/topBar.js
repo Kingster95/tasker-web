@@ -5,7 +5,7 @@ function TopBar() {
   const [message, setMessage] = useState("Loading....");
 
 useEffect(() => {
-  fetch("https://tasker-server.vercel.app/about")
+  fetch("https://tasker-server.vercel.app")
     .then((response) => response.json())
     .then((data) => {
       setMessage(data.message); // Access the 'message' property from the JSON response
