@@ -1,4 +1,4 @@
-const apiUrl = "https://tasker-server.vercel.app";
+const apiUrl = "http://localhost:5000";
 
 export const login = async (email, password) => {
   try {
@@ -9,8 +9,8 @@ export const login = async (email, password) => {
       },
       body: JSON.stringify({ email, password }),
     });
-    if (!response.ok) {
-      throw new Error("Request failed with status " + response.status);
+    if (response.error) {
+      throw new Error("Request: " + response.message);
     }
     const data = await response.json();
     return data;
@@ -30,7 +30,7 @@ export const register = async (email, password) => {
         body: JSON.stringify({ email, password }),
       });
       if (!response.ok) {
-        throw new Error("Request failed with status " + response.status);
+        throw new Error("Request: " + response.message);
       }
       const data = await response.json();
       return data;

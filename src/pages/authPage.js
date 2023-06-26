@@ -3,7 +3,11 @@ import "../styles/AuthPage.css";
 import { useState } from "react";
 import Toggle from "../components/subComponents/Toggle";
 import * as usersApi from "../hooks/usersAPI";
+import { useNavigate } from "react-router-dom";
 function AuthPage() {
+
+  const navigate = useNavigate();
+
   let title_options = ["Welcome Back!", "Get Started Now"];
   let subtitle_options = [
     "Enter your credentials to use your account",
@@ -64,6 +68,14 @@ function AuthPage() {
       .login(email, password)
       .then((data) => {
         console.log(data);
+        if(data.error===false)
+        {
+          if(data.userId)
+          {
+            console.log("Successfully Logged In");
+            navigate("/Dashboard");
+          }
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -80,10 +92,10 @@ function AuthPage() {
         console.error(error);
       });
   };
-  
+
   return (
     <div className="App">
-      <div id="mainContent">
+      <div id="mainContentPage">
         <div id="logo">
           <img src={require("../assets/tasker_logo.png")} alt="Arrow" />
         </div>
@@ -161,7 +173,10 @@ function AuthPage() {
                     I agree to <p>Terms of Service</p>
                   </label>
                 </div>
-                <button onClick={handleLogin} disabled={animate || reverse}>
+                <button
+                  onClick={authState === 0 ? handleLogin : handleRegister}
+                  disabled={animate || reverse}
+                >
                   <p className={animate ? "typed" : reverse ? "reverse" : null}>
                     {buttonTitle}
                   </p>
