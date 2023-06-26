@@ -1,7 +1,8 @@
 import "../styles/App.css";
 import "../styles/AuthPage.css";
 import { useState } from "react";
-
+import Toggle from "../components/subComponents/Toggle";
+import * as usersApi from "../hooks/usersAPI";
 function AuthPage() {
   let title_options = ["Welcome Back!", "Get Started Now"];
   let subtitle_options = [
@@ -22,7 +23,11 @@ function AuthPage() {
 
   const [formHeight, setFormHeight] = useState("40%");
   const [inputHeight, setInputHeight] = useState("0%");
-  const [checkBoxHeight,setCheckBoxHeight] = useState("0%");
+  const [checkBoxHeight, setCheckBoxHeight] = useState("0%");
+  const [overflowInput, setOverflow] = useState(false);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const [errorMessages, setErrorMessages] = useState({});
 
@@ -32,7 +37,7 @@ function AuthPage() {
     );
 
   const handleSubmit = () => {
-    setFormHeight(authState === 0 ? "55%" : "40%");
+    setFormHeight(authState === 0 ? "57.5%" : "40%");
 
     setAuthState((prevState) => (prevState === 0 ? 1 : 0));
     setReverse(true);
@@ -40,6 +45,9 @@ function AuthPage() {
       setInputHeight(authState === 0 ? "25%" : "0%");
       setCheckBoxHeight(authState === 0 ? "7.5%" : "0%");
     }, 100);
+    setTimeout(() => {
+      setOverflow(authState === 0 ? true : false);
+    }, 400);
     setTimeout(() => {
       setReverse(false);
       setAnimate(true);
@@ -50,7 +58,29 @@ function AuthPage() {
 
     setTimeout(() => setAnimate(false), 2500);
   };
-
+  const handleLogin = (event) => {
+    event.preventDefault();
+    usersApi
+      .login(email, password)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  const handleRegister = (event) => {
+    event.preventDefault();
+    usersApi
+      .register(email, password)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  
   return (
     <div className="App">
       <div id="mainContent">
@@ -89,22 +119,35 @@ function AuthPage() {
                   className="formInput"
                   style={{
                     height: inputHeight,
+                    overflow: overflowInput ? "visible" : "hidden",
                   }}
                 >
                   <label>Username</label>
-                  <input type="name" name="email" required />
+                  <input type="name" name="username" />
                   {renderErrorMessage("email")}
                 </div>
 
                 <div className="formInput">
                   <label>Email</label>
-                  <input type="email" name="email" required />
+                  <input
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    type="email"
+                    name="email"
+                    required
+                  />
                   {renderErrorMessage("email")}
                 </div>
 
                 <div className="formInput">
                   <label>Password</label>
-                  <input type="password" name="pass" required />
+                  <input
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    type="password"
+                    name="pass"
+                    required
+                  />
                   {renderErrorMessage("pass")}
                 </div>
                 <div
@@ -114,14 +157,30 @@ function AuthPage() {
                   }}
                 >
                   <input type="checkbox" />
-                  <label >I agree to <p>Terms of Service</p></label>
+                  <label>
+                    I agree to <p>Terms of Service</p>
+                  </label>
                 </div>
-                <button onClick={() => handleSubmit()} disabled={animate}>
+                <button onClick={handleLogin} disabled={animate || reverse}>
                   <p className={animate ? "typed" : reverse ? "reverse" : null}>
                     {buttonTitle}
                   </p>
                 </button>
               </form>
+            </div>
+            <div className="switchButton">
+              <p className={authState === 1 ? "p_disabled" : "switchText"}>
+                Login
+              </p>
+              <Toggle
+                disabledCheck={animate || reverse}
+                label="Toggle me"
+                toggled={authState}
+                onClick={handleSubmit}
+              />
+              <p className={authState === 0 ? "p_disabled" : "switchText"}>
+                Register
+              </p>
             </div>
           </div>
         </div>

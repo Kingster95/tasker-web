@@ -82,7 +82,7 @@
 #authLayout {
     width: 70%;
     height: 80%;
-    margin-top: 15%;
+    margin-top: 10%;
 }
 
 #layoutHeader {
@@ -179,7 +179,7 @@ footer p {
     width: 70%;
     min-height: 40%;
     max-height: 80%;
-    margin-top: 4%;
+    margin-top: 2%;
     display: flex;
     flex-direction: column;
     transition: height 0.4s ease-in-out;
@@ -203,7 +203,7 @@ footer p {
     flex-direction: column;
     align-items: flex-start;
     transition: all 0.7s ease-in-out;
-    overflow: hidden;
+    overflow: visible;
     gap: 1vh;
     margin-right: 8px;
 }
@@ -244,6 +244,7 @@ footer p {
     border: 0;
     cursor: pointer;
     overflow: visible;
+    margin-bottom: 2vh;
 }
 
 .formContainer button p {
@@ -317,4 +318,21 @@ footer p {
 #logo img{
     width: 100%;
     height: auto;
+}
+.switchButton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    width: 30%;
+    align-self: center;
+    margin-left: 20%;
+}
+.switchText{
+    color: var(--app-text-color);
+    font-size: var(--p-size);
+}
+.p_disabled{
+    font-size: var(--p-size);
+    color:var(--text-disabled-color);
 }
