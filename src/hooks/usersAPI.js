@@ -1,4 +1,4 @@
-const apiUrl = "http://localhost:5000";
+const apiUrl = "https://tasker-server.vercel.app/";
 
 export const login = async (email, password) => {
   try {
