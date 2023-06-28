@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { progress } from "../../hooks/database";
+import {default_progress} from "../../hooks/database";
 
 function ProgressCards() {
   const [progressHeight, setProgressHeight] = useState("90%");
@@ -10,8 +10,8 @@ function ProgressCards() {
 
   const calculateHeight = () => {
     let x = 13;
-    for (let i = 0; i < progress.length; i++)
-      if (progress[i].has_image === true) {
+    for (let i = 0; i < default_progress.length; i++)
+      if (default_progress[i].has_image === true) {
         x = x + 34;
       } else x = x + 13;
     setProgressHeight(x.toString() + "%");
@@ -57,7 +57,7 @@ function ProgressCards() {
           </button>
         </div>
       </div>
-      {progress.map((item, index) => (
+      {default_progress.map((item, index) => (
         <div
           key={index}
           className="categoryCard"

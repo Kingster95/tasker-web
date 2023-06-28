@@ -5,7 +5,6 @@ import Toggle from "../components/subComponents/Toggle";
 import * as usersApi from "../hooks/usersAPI";
 import { useNavigate } from "react-router-dom";
 function AuthPage() {
-
   const navigate = useNavigate();
 
   let title_options = ["Welcome Back!", "Get Started Now"];
@@ -13,13 +12,13 @@ function AuthPage() {
     "Enter your credentials to use your account",
     "Enter your credentials to create an account",
   ];
-  let buttonTitle_options = ["Login", "Register"];
+  let buttonTitle_options = ["Log In", "Register"];
 
   const [title, setTitle] = useState("Welcome Back!");
   const [subtitle, setSubtitle] = useState(
     "Enter your credentials to use your account"
   );
-  const [buttonTitle, setButtonTitle] = useState("Login");
+  const [buttonTitle, setButtonTitle] = useState("Log In");
 
   const [authState, setAuthState] = useState(0);
   const [animate, setAnimate] = useState(false);
@@ -33,6 +32,8 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [apiError, setApiError] = useState(false);
+  const [apiMessage, setApiMessage] = useState("");
   const [errorMessages, setErrorMessages] = useState({});
 
   const renderErrorMessage = (name) =>
@@ -68,13 +69,21 @@ function AuthPage() {
       .login(email, password)
       .then((data) => {
         console.log(data);
-        if(data.error===false)
-        {
-          if(data.userId)
-          {
+        if (data.error === false) {
+          if (data.userId) {
             console.log("Successfully Logged In");
+            setApiError(false);
+            setApiMessage(" ");
+            localStorage.setItem("userInfo", JSON.stringify(data));
             navigate("/Dashboard");
           }
+        }
+        else
+        {
+          console.log("Display Error: " + data.message);
+          setPassword("");
+          setApiError(true);
+          setApiMessage(data.message);
         }
       })
       .catch((error) => {
@@ -87,6 +96,22 @@ function AuthPage() {
       .register(email, password)
       .then((data) => {
         console.log(data);
+        if (data.error === false) {
+          if (data.userId) {
+            console.log("Successfully Registered In");
+            setApiError(false);
+            setApiMessage(" ");
+            localStorage.setItem("userInfo", JSON.stringify(data));
+            navigate("/Dashboard");
+          }
+        }
+        else
+        {
+          console.log("Display Error: " + data.message);
+          setPassword("");
+          setApiError(true);
+          setApiMessage(data.message);
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -162,6 +187,7 @@ function AuthPage() {
                   />
                   {renderErrorMessage("pass")}
                 </div>
+                {apiError===true? <p style={{color:"red"}}>{apiMessage}</p> : null}
                 <div
                   className="checkBox"
                   style={{
@@ -176,6 +202,7 @@ function AuthPage() {
                 <button
                   onClick={authState === 0 ? handleLogin : handleRegister}
                   disabled={animate || reverse}
+                  className="fill"
                 >
                   <p className={animate ? "typed" : reverse ? "reverse" : null}>
                     {buttonTitle}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { review } from "../../hooks/database";
+import { default_review } from "../../hooks/database";
 
 function ReviewCards() {
   const [reviewHeight, setReviewHeight] = useState("90%");
@@ -10,8 +10,8 @@ function ReviewCards() {
 
   const calculateHeight = () => {
     let x = 13;
-    for (let i = 0; i < review.length; i++)
-      if (review[i].has_image === true) {
+    for (let i = 0; i < default_review.length; i++)
+      if (default_review[i].has_image === true) {
         x = x + 34;
       } else x = x + 13;
     setReviewHeight(x.toString() + "%");
@@ -58,7 +58,7 @@ function ReviewCards() {
           </button>
         </div>
       </div>
-      {review.map((item, index) => (
+      {default_review.map((item, index) => (
         <div
           key={index}
           className="categoryCard"

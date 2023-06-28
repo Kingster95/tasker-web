@@ -1,13 +1,13 @@
 import "../styles/App.css";
 import "../styles/NavBar.css";
-import { projects } from "../hooks/database";
+import { default_projects } from "../hooks/database";
 import { useEffect, useState } from "react";
 
 function NavBar() {
   const [showProjects, setShowProjects] = useState(true);
   const [selectedProject, setSelectedProject] = useState(0);
   const [projectsHeight, setProjectsHeight] = useState(
-    (( projects.length + 0.75 ) * 6.5).toString() + "%"
+    (( default_projects.length + 0.75 ) * 6.5).toString() + "%"
   );
 
   const toggleProjects = () => {
@@ -15,7 +15,7 @@ function NavBar() {
       setProjectsHeight("5%");
       setShowProjects(false);
     } else {
-      let x = ( projects.length + 0.75 ) * 6.5;
+      let x = ( default_projects.length + 0.75 ) * 6.5;
       let x_string = x.toString() + "%";
       setProjectsHeight(x_string);
       setShowProjects(true);
@@ -49,7 +49,7 @@ function NavBar() {
             transition: "height 1s ease-in-out",
           }}
         >
-          {projects.map((project, index) => (
+          {default_projects.map((project, index) => (
             <div key={index} className="projectContainer">
               <div className="projectBubble" />
               <h4 className="h4">{project.title}</h4>

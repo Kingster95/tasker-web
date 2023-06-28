@@ -2,23 +2,15 @@ import "../styles/App.css";
 import "../styles/TopBar.css";
 import { useEffect, useState } from "react";
 function TopBar() {
-  const [message, setMessage] = useState("Loading....");
-
-useEffect(() => {
-  fetch("https://tasker-server.vercel.app")
-    .then((response) => response.json())
-    .then((data) => {
-      setMessage(data.message); // Access the 'message' property from the JSON response
-    });
-}, []);
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   return (
     <div id="topBar">
-      <h3>{message}</h3>
+      <h3>Team Tasks</h3>
       <div id="topRight">
         <input
           type="search"
           placeholder="Search here"
-          onChange={null}
+          onChange={""}
           value={""}
         />
         <img
@@ -27,7 +19,7 @@ useEffect(() => {
         />
         <img
           style={{ width: "3.5%", borderRadius: "50%" }}
-          src={require("../assets/profile_pic.jpg")}
+          src={userInfo.image_url?null:require("../assets/user_icon.png")}
           alt="profile"
         />
       </div>

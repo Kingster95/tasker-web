@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from "react";
-import { todo } from "../../hooks/database";
+import { default_todo } from "../../hooks/database";
 function ToDoCards() {
   const [todoHeight, setToDoHeight] = useState("90%");
   const [todoPressed, setTodoPressed] = useState(true);
@@ -10,8 +10,8 @@ function ToDoCards() {
 
   const calculateHeight = () => {
     let x = 13;
-    for (let i = 0; i < todo.length; i++)
-      if (todo[i].has_image === true) {
+    for (let i = 0; i < default_todo.length; i++)
+      if (default_todo[i].has_image === true) {
         x = x + 34;
       } else x = x + 13;
     setToDoHeight(x.toString() + "%");
@@ -57,7 +57,7 @@ function ToDoCards() {
           </button>
         </div>
       </div>
-      {todo.map((todo, index) => (
+      {default_todo.map((todo, index) => (
         <div
           key={index}
           className="categoryCard"

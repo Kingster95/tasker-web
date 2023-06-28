@@ -3,14 +3,36 @@ import "../styles/Animations.css";
 import NavBar from "../components/navbar";
 import TopBar from "../components/topBar";
 import MainContent from "../components/mainContent";
-
+import * as userController from '../hooks/usersAPI';
+import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 function Dashboard() {
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
   
   useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo)
+    {
+      userController
+      .fetchUser(userInfo.email)
+      .then((data) => {
+        console.log(data.data);
+        if (data.error === false) {
+          if (data.userId) {
+            localStorage.setItem("userInfo", JSON.stringify(data));
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+    else
+    {
+      navigate("/");
+    }
     setTimeout(() => {
       setLoading(false);
     }, 2000);

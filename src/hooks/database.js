@@ -1,4 +1,8 @@
-export const projects = [
+export function fetch_projects() {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  console.log(userInfo);
+}
+export const default_projects = [
   {
     title: "Workshop Ortan",
     people: 2,
@@ -9,7 +13,7 @@ export const projects = [
   },
 ];
 
-export const todo = [
+export const default_todo = [
   {
     title: "Finish To Do category",
     has_image: false,
@@ -17,22 +21,24 @@ export const todo = [
     has_comments: true,
     has_files: true,
     description: "Finish making the To Do cards as fast as possible",
-    comments_number:2,
-    files_attached:2,
+    comments_number: 2,
+    files_attached: 2,
     status: 1,
   },
   {
     title: "Background Image Design",
     has_image: true,
     has_description: true,
+    has_comments: true,
+    has_files: true,
     description: "Add this background",
-    comments_number:5,
-    files_attached:1,
+    comments_number: 5,
+    files_attached: 1,
     status: 2,
   },
 ];
 
-export const progress = [
+export const default_progress = [
   {
     title: "Fix Critical Bug",
     has_image: false,
@@ -72,9 +78,8 @@ export const progress = [
     files_attached: 0,
     status: 1, // Urgency level: Low
   },
-  
 ];
-export const review = [
+export const default_review = [
   {
     title: "Review Design Mockups",
     has_image: false,
@@ -92,7 +97,8 @@ export const review = [
     has_description: true,
     has_comments: true,
     has_files: false,
-    description: "Go through user feedback and identify key areas for improvement",
+    description:
+      "Go through user feedback and identify key areas for improvement",
     comments_number: 5,
     files_attached: 0,
     status: 1,
@@ -114,7 +120,8 @@ export const review = [
     has_description: true,
     has_comments: true,
     has_files: true,
-    description: "Evaluate the effectiveness of the marketing campaign and suggest improvements",
+    description:
+      "Evaluate the effectiveness of the marketing campaign and suggest improvements",
     comments_number: 2,
     files_attached: 1,
     status: 1,
