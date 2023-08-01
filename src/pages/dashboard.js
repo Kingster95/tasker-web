@@ -13,12 +13,12 @@ function Dashboard() {
   
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const isGuest = JSON.parse(localStorage.getItem("isGuest"));
     if (userInfo)
     {
       userController
       .fetchUser(userInfo.email)
       .then((data) => {
-        console.log(data.data);
         if (data.error === false) {
           if (data.userId) {
             localStorage.setItem("userInfo", JSON.stringify(data));
@@ -29,7 +29,7 @@ function Dashboard() {
         console.error(error);
       });
     }
-    else
+    else if ( isGuest != true )
     {
       navigate("/");
     }

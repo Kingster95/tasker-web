@@ -63,6 +63,10 @@ function AuthPage() {
 
     setTimeout(() => setAnimate(false), 2500);
   };
+  const handleGuestLogin = () => {
+    localStorage.setItem("isGuest", true);
+    navigate("/Dashboard");
+  };
   const handleLogin = (event) => {
     event.preventDefault();
     usersApi
@@ -75,6 +79,7 @@ function AuthPage() {
             setApiError(false);
             setApiMessage(" ");
             localStorage.setItem("userInfo", JSON.stringify(data));
+            localStorage.setItem("isGuest", false);
             navigate("/Dashboard");
           }
         }
@@ -139,9 +144,8 @@ function AuthPage() {
                   <img src={require("../assets/google_logo.png")} alt="Arrow" />
                   <p>Log In With Google</p>
                 </button>
-                <button className="loginButton">
-                  <img src={require("../assets/apple_logo.png")} alt="Arrow" />
-                  <p>Log In With Apple</p>
+                <button className="loginButton" onClick={handleGuestLogin}>
+                  <p>Enter As Guest</p>
                 </button>
               </div>
             </div>

@@ -59,7 +59,7 @@
   border-radius: 16px;
   background-color: var(--card-background);
   box-shadow: 0 0 2.5px rgba(0, 0, 0, 0.2);
-  margin-bottom: 2.5%;
+  margin-bottom: 2%;
   display: flex;
   flex-direction: column;
   transition: opacity 0.3s ease-in-out;
@@ -170,4 +170,79 @@
   margin-top: 0.5%;
   align-self: center;
   font-size: var(--h4-size);
+}
+
+.addCardContainer {
+  width: 100%;
+  height: 70%;
+  align-self: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.addCardHolder {
+  width: 90%;
+  height: 12.5vh;
+  margin-top: 2%;
+  align-self: center;
+  border-radius: 16px;
+  background-color: var(--card-background);
+  box-shadow: 0 0 2.5px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2%;
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s ease-in-out;
+  justify-content: space-around;
+  align-items: center;
+  overflow: visible;
+}
+
+.decisionContainer {
+  height: 40%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdown {
+  overflow: visible;
+  width: 35%;
+  height: 55%;
+  align-self: center;
+  margin-right: 5%;
+}
+
+.addButton {
+  width: 45%;
+  height: 85%;
+  border-radius: 14px;
+  border: 2px solid var(--buttons-border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  background-color: transparent;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+}
+
+.cancelButton {
+  width: 10%;
+  height: 100%;
+  align-self: center;
+  margin-right: 8.5%;
+  margin-bottom: 3%;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 100px;
+  overflow: visible;
+}
+.cancelButton:hover{
+  background-color: #f8f7fe;
 }

@@ -1,16 +1,12 @@
 export function fetch_projects() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-  console.log(userInfo);
+  console.log("DATABASE QUERY:" + userInfo);
 }
 export const default_projects = [
   {
-    title: "Workshop Ortan",
+    title: "Workshop 1",
     people: 2,
-  },
-  {
-    title: "Atelier Visan",
-    people: 1,
-  },
+  }
 ];
 
 export const default_todo = [

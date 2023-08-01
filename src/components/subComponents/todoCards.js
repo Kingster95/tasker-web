@@ -1,29 +1,115 @@
-
 import { useState, useEffect } from "react";
 import { default_todo } from "../../hooks/database";
+import { Select, MenuItem, Input } from "@mui/material";
+import * as cardsController from "../../hooks/projectsAPI";
+
 function ToDoCards() {
+  const [cards, setCards] = useState(default_todo);
   const [todoHeight, setToDoHeight] = useState("90%");
   const [todoPressed, setTodoPressed] = useState(true);
   const [todoOpacity, setTodoOpacity] = useState(0);
-  
+  const [addPressed, setAddPressed] = useState(false);
+
+  const [addPriority, setAddPriority] = useState(0);
+  const [addTitle, setAddTitle] = useState("");
   let cardsColors = ["#d84721", "#fd9d28", "#78d734", "#78d734"];
 
-  const calculateHeight = () => {
-    let x = 13;
-    for (let i = 0; i < default_todo.length; i++)
-      if (default_todo[i].has_image === true) {
+  const handlePriority = (event) => {
+    setAddPriority(event.target.value);
+  };
+  const handleTitle = (event) => {
+    setAddTitle(event.target.value);
+  };
+  const calculateHeight = (x) => {
+    x = x + 13;
+    for (let i = 0; i < cards.length; i++)
+      if (cards[i].has_image === true) {
         x = x + 34;
       } else x = x + 13;
     setToDoHeight(x.toString() + "%");
-    console.log(x);
   };
+  const handleAddTask = async () => {
+    let newCard = {
+      title: addTitle,
+      has_image: false,
+      has_description: false,
+      has_comments: false,
+      has_files: false,
+      description: "",
+      comments_number: 0,
+      files_attached: 0,
+      status: addPriority,
+    };
+    const isGuest = JSON.parse(localStorage.getItem("isGuest"));
+    if (isGuest != true) {
+      try {
+        const projectsInfo = JSON.parse(localStorage.getItem("projects"));
+        const selectedProject = JSON.parse(
+          localStorage.getItem("selectedProject")
+        );
 
+        // Add the new card to the local state immediately
+        setCards((prevCards) => [...prevCards, newCard]);
+        console.log("PROJECT ID: " + projectsInfo[0]._id);
+        // Use await or .then() to handle the response from addToDoCard
+        if (selectedProject) {
+          await cardsController.addToDoCard(
+            newCard,
+            projectsInfo[selectedProject]._id
+          );
+        } else {
+          await cardsController.addToDoCard(newCard, projectsInfo[0]._id);
+        }
+
+        calculateHeight(15);
+        setAddPressed(false);
+      } catch (error) {
+        console.error("Error adding todo card:", error.message);
+        // Handle the error case here, e.g., show an error message to the user.
+      }
+    }
+    else
+    {
+      setCards((prevCards) => [...prevCards, newCard]);
+      calculateHeight(15);
+      setAddPressed(false);
+    }
+  };
   useEffect(() => {
-    setTimeout(() => calculateHeight(),150);
-    setTimeout(() => setTodoOpacity(1), 150);
+    const projectsInfo = JSON.parse(localStorage.getItem("projects"));
+    const selectedProject = JSON.parse(localStorage.getItem("selectedProject"));
+    const isGuest = JSON.parse(localStorage.getItem("isGuest"));
+    if (projectsInfo && isGuest != true) {
+      if (selectedProject) {
+        setCards(projectsInfo[selectedProject].todo_cards);
+        let x = 13;
+        for (let i = 0; i < projectsInfo[0].todo_cards.length; i++)
+          if (projectsInfo[0].todo_cards[i].has_image === true) {
+            x = x + 34;
+          } else x = x + 13;
+        setToDoHeight(x.toString() + "%");
+      } else if (projectsInfo.length >= 1) {
+        setCards(projectsInfo[0].todo_cards);
+        let x = 16;
+        for (let i = 0; i < projectsInfo[0].todo_cards.length; i++)
+          if (projectsInfo[0].todo_cards[i].has_image === true) {
+            x = x + 34;
+          } else x = x + 16;
+        setToDoHeight(x.toString() + "%");
+        setTimeout(() => setTodoOpacity(1), 150);
+      } else {
+        setCards([]);
+        setTimeout(() => setToDoHeight("15%"), 150);
+        setTimeout(() => setTodoOpacity(1), 150);
+      }
+    } else {
+      setTimeout(() => calculateHeight(0), 150);
+      setTimeout(() => setTodoOpacity(1), 150);
+    }
   }, []);
 
   function triggerToDo() {
+    setAddPressed(false);
     if (todoPressed && todoOpacity === 1) {
       setTodoPressed(false);
       setToDoHeight("0%");
@@ -31,16 +117,28 @@ function ToDoCards() {
     } else {
       setTodoPressed(true);
 
-      calculateHeight();
+      calculateHeight(0);
       setTimeout(() => setTodoOpacity(1), 300);
     }
+  }
+  function triggerAddTask() {
+    if ( addPressed === true )
+    {
+      setAddPressed(false);
+      calculateHeight(0);
+    }
+    else{
+      setAddPressed(true);
+      calculateHeight(10);
+    }
+    
   }
   return (
     <div className="categoryBody" style={{ height: todoHeight }}>
       <div className="categoryHeader">
         <h3>To Do</h3>
         <div className="categoryHeaderIcons">
-          <button onClick={() => triggerToDo()}>
+          <button onClick={() => triggerAddTask()}>
             <img
               style={{ width: "50%", height: "50%", alignSelf: "center" }}
               src={require("../../assets/plus_icon.png")}
@@ -57,7 +155,7 @@ function ToDoCards() {
           </button>
         </div>
       </div>
-      {default_todo.map((todo, index) => (
+      {cards.map((todo, index) => (
         <div
           key={index}
           className="categoryCard"
@@ -84,11 +182,17 @@ function ToDoCards() {
           ) : null}
           <div className="cardInfo">
             {todo.has_description ? (
-              <img src={require("../../assets/description_icon.png")} alt="edit" />
+              <img
+                src={require("../../assets/description_icon.png")}
+                alt="edit"
+              />
             ) : null}
             {todo.has_comments ? (
               <div className="cardComments">
-                <img src={require("../../assets/comments_icon.png")} alt="edit" />
+                <img
+                  src={require("../../assets/comments_icon.png")}
+                  alt="edit"
+                />
                 <p>{todo.comments_number}</p>
               </div>
             ) : null}
@@ -107,14 +211,57 @@ function ToDoCards() {
           </div>
         </div>
       ))}
-      <button className="plusTask" style={{ opacity: todoOpacity }}>
-        <img
-          style={{ width: "7.5%", height: "auto", alignSelf: "center" }}
-          src={require("../../assets/plus_icon.png")}
-          alt="edit"
-        />
-        <h4>Add task</h4>
-      </button>
+      {addPressed === false ? (
+        <button
+          className="plusTask"
+          style={{ opacity: todoOpacity }}
+          onClick={() => triggerAddTask()}
+        >
+          <img
+            style={{ width: "7.5%", height: "auto", alignSelf: "center" }}
+            src={require("../../assets/plus_icon.png")}
+            alt="edit"
+          />
+          <h4>Add task</h4>
+        </button>
+      ) : (
+        <div className="addCardHolder" style={{ opacity: todoOpacity }}>
+          <div className="addCardContainer" style={{ opacity: todoOpacity }}>
+            <Input
+              placeholder="Title"
+              value={addTitle}
+              onChange={handleTitle}
+            />
+            <Select
+              labelId="addDropdown"
+              value={addPriority}
+              className="dropdown"
+              onChange={handlePriority}
+            >
+              <MenuItem value={0}>High Priority</MenuItem>
+              <MenuItem value={1}>Medium Priority</MenuItem>
+              <MenuItem value={2}>Low Priority</MenuItem>
+              <MenuItem value={3}>Standby</MenuItem>
+            </Select>
+          </div>
+          <div className="decisionContainer">
+            <button
+              onClick={handleAddTask}
+              className="fill"
+              style={{ width: "25%", height: "75%", marginLeft: "4%" }}
+            >
+              <p>Add task</p>
+            </button>
+            <button className="cancelButton" onClick={() => triggerAddTask()}>
+              <img
+                style={{ width: "50%", height: "auto", alignSelf: "center" }}
+                src={require("../../assets/x_icon.png")}
+                alt="exit"
+              />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

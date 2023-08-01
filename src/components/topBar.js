@@ -3,6 +3,7 @@ import "../styles/TopBar.css";
 import { useEffect, useState } from "react";
 function TopBar() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const isGuest = JSON.parse(localStorage.getItem("isGuest"));
   return (
     <div id="topBar">
       <h3>Team Tasks</h3>
@@ -19,7 +20,7 @@ function TopBar() {
         />
         <img
           style={{ width: "3.5%", borderRadius: "50%" }}
-          src={userInfo.image_url?null:require("../assets/user_icon.png")}
+          src={isGuest === false && userInfo.image_url?null:require("../assets/user_icon.png")}
           alt="profile"
         />
       </div>

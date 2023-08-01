@@ -82,11 +82,40 @@
       border-top-right-radius: 22px;
       border-bottom-right-radius: 22px;
     }
+
     .h4 {
       color: black;
     }
   }
 }
+
+.selectedProjectContainer {
+  width: 100%;
+  height: 6.5vh;
+  margin-top: 5%;
+  font-size: large;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: flex-start;
+  background-color: #f8f7fe;
+  .projectBubble {
+    background-color: #7e62f8;
+    width: 4%;
+    height: 100%;
+    border-top-right-radius: 22px;
+    border-bottom-right-radius: 22px;
+  }
+
+  .h4 {
+    color: black;
+  }
+}
+
+.selectedProjectContainer h4 {
+  margin-left: 15%;
+}
+
 
 .projectContainer h4 {
   margin-left: 15%;
@@ -98,11 +127,14 @@
   align-self: flex-end;
 }
 
+.selectedProjectContainer:hover {
+  background-color: #f8f7fe;
+  cursor: pointer;
+}
 .projectContainer:hover {
   background-color: #f8f7fe;
   cursor: pointer;
 }
-
 .divider {
   width: 90%;
   height: 0.5px;
